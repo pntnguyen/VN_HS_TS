@@ -1,0 +1,30 @@
+---
+title: "Vietnam map with Paracel and Spratly Islands"
+---
+
+```{r}
+library(sf)
+library(ggplot2)
+```
+
+# Import data
+
+```{r}
+link <- "https://data.opendevelopmentmekong.net/dataset/999c96d8-fae0-4b82-9a2b-e481f6f50e12/resource/2818c2c5-e9c3-440b-a9b8-3029d7298065/download/diaphantinhenglish.geojson?fbclid=IwAR1coUVLkuEoJRsgaH81q6ocz1nVeGBirqpKRBN8WWxXQIJREUL1buFi1eE"
+
+vn_province <- sf::st_read(link)
+
+### OUCRU coordinate
+oucru_coord <- data.frame(long = c(106.6784,105.8389),
+                   lat  = c(10.7538,21.0023)) %>%
+  st_as_sf(coords = c("long", "lat"), crs = 4326)
+```
+
+```{r}
+ggplot() + 
+  geom_sf(data = vn_province)+
+  geom_sf(data = oucru_coord, shape = 23, 
+          fill = "red", size = 2)+
+  theme_void()
+```
+
